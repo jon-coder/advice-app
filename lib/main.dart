@@ -7,7 +7,7 @@ import 'app/application/core/services/theme_service.dart';
 void main() {
   runApp(
     ChangeNotifierProvider(
-      create: (context) => ThemeService(),
+      create: (context) => ThemeService.i,
       child: const AdvicerApp(),
     ),
   );
