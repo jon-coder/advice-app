@@ -1,3 +1,4 @@
+import 'package:advicer_app/app/application/core/services/logger_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,6 +27,7 @@ class AdvicePage extends StatelessWidget {
           Switch(
             value: context.themeService.isDarkModeOn,
             onChanged: (_) {
+              context.logger.log('Change the color', ['error message', 'error stack trace']);
               context.themeService.toggleTheme();
             },
           ),
