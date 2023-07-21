@@ -26,6 +26,11 @@ abstract class BaseLoggerService {
 class LoggerService extends BaseLoggerService {
   static LoggerService? _instance;
 
+  static const String _redColor = '\u001b[31m';
+  static const String _blueColor = '\u001b[34m';
+  static const String _yellowColor = '\u001b[33m';
+  static const String _resetColor = '\u001b[0m';
+
   LoggerService._internal() {
     Logger.root.level = Level.ALL;
     Logger.root.onRecord.listen((_recordHandler));
@@ -37,10 +42,11 @@ class LoggerService extends BaseLoggerService {
   factory LoggerService() => _instance ?? LoggerService._internal();
 
   void _recordHandler(LogRecord rec) {
-    debugPrint('${_dateFormatter.format(rec.time)}: ${rec.message}, ${rec.error}');
+    debugPrint(
+        '$_blueColor${_dateFormatter.format(rec.time)}: $_yellowColor${rec.message}, $_redColor${rec.error},$_resetColor');
   }
 }
 
-extension ThemeServiceExtension on BuildContext {
+extension LoggerServiceExtension on BuildContext {
   LoggerService get logger => LoggerService();
 }
