@@ -1,6 +1,6 @@
-import 'dart:developer';
 import 'package:http/http.dart';
 
+import '../application/core/services/logger_service.dart';
 import '../data/exceptions/exceptions.dart';
 import '../data/rest_client/http_client.dart';
 
@@ -40,7 +40,7 @@ class HttpAdapter implements HttpClient {
       );
       response = await futureResponse.timeout(const Duration(seconds: 15));
     } catch (e, s) {
-      log('Timeout error in HTTP Adapter', error: e, stackTrace: s);
+      LoggerService().log('Timeout error in HTTP Adapter', [e, s]);
       throw TimeOutException();
     }
     return _handleResponse(response);
@@ -81,7 +81,7 @@ class HttpAdapter implements HttpClient {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return response.body;
     } else {
-      log('Server error with status code ${response.statusCode}');
+      LoggerService().log('Server error', ['Status Code ${response.statusCode}']);
       throw ServerException();
     }
   }

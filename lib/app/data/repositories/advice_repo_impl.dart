@@ -1,13 +1,12 @@
-import 'dart:developer';
-
-import 'package:advicer_app/app/data/exceptions/exceptions.dart';
 import 'package:dartz/dartz.dart';
 
+import '../../application/core/services/logger_service.dart';
 import '../../domain/entities/advice_entity.dart';
 import '../../domain/failures/failures.dart';
 import '../../domain/repositories/advice_repository.dart';
 
 import '../datasources/advice_remote_datasource.dart';
+import '../exceptions/exceptions.dart';
 
 class AdviceRepositoryImpl implements AdviceRepository {
   final AdviceRemoteDatasource adviceRemoteDatasource;
@@ -21,10 +20,10 @@ class AdviceRepositoryImpl implements AdviceRepository {
       final response = await adviceRemoteDatasource.getRandomAdviceFromApi();
       return right(response);
     } on ServerException catch (e, s) {
-      log('Server error', error: e, stackTrace: s);
+      LoggerService().log('Server error', [e, s]);
       return left(ServerFailure());
     } catch (e, s) {
-      log('General error', error: e, stackTrace: s);
+      LoggerService().log('General Error', [e, s]);
       return left(GeneralFailure());
     }
   }

@@ -1,3 +1,5 @@
+import 'package:advicer_app/app/application/core/services/logger_service.dart';
+
 import '../../../domain/failures/failures.dart';
 
 mixin ErrorMessages {
@@ -6,6 +8,7 @@ mixin ErrorMessages {
   static String get _serverErrorMessage => 'Ups, API Error. Please, try again';
 
   String mapErrorMessage(Failure f) {
+    LoggerService().log('Error State', [f.runtimeType]);
     switch (f.runtimeType) {
       case ServerFailure:
         return _serverErrorMessage;
